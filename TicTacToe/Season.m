@@ -10,21 +10,21 @@ classdef Season
 
     methods
         function obj = Season(numOfBots, mutateRate, numOfGenerations)
-            obj.BotArray = repmat(TicTacToeBot(), numOfBots, 1);
+            obj.BotArray = TicTacToeBot.empty(numOfBots, 0);
+            for i = 1:numOfBots
+                obj.BotArray(i) = TicTacToeBot();
+            end
             obj.mutateRate = mutateRate;
             obj.numOfGenerations = numOfGenerations;
         end
 
         function obj = RunSeason(obj)
-            obj = obj.sort();
-            ST = SwissTournament(obj.BotArray); log2(Size(obj.BotArray));
+            rounds = log2(length(obj.BotArray));
+            ST = Swiss(obj.BotArray, rounds); 
+
             ST.run_tournament();
         end
 
-        function obj = sort(obj)
-            [~, sorted_idx] = sort([obj.BotArray.score]);
-            obj.BotArray = my_objects(sorted_idx);
-        end
     end
 end
 

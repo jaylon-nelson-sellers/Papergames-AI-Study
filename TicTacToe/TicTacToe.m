@@ -72,7 +72,7 @@ classdef TicTacToe
 
         end
 
-        function obj = playBotBotGame(obj, Bot, Bot2)
+        function winner = playBotBotGame(obj, Bot, Bot2)
             % Loop until the game is over
             while true
 
@@ -83,12 +83,14 @@ classdef TicTacToe
                 % Check if the bot has won
                 if check_win(obj.board, 1)
                     fprintf('Bot 1 wins!\n');
+                    winner = 1;
                     break;
                 end
 
                 % Check if the game is a tie
                 if check_tie(obj.board)
                     fprintf('The game is a tie.\n');
+                    winner = 0;
                     break;
                 end
 
@@ -99,12 +101,14 @@ classdef TicTacToe
                 disp( obj.board);
                 % Check if the bot has won
                 if check_win(obj.board, 2)
+                    winner = 2;
                     fprintf('Bot 2 wins!\n');
                     break;
                 end
 
                 % Check if the game is a tie
                 if check_tie(obj.board)
+                    winner = 0;
                     fprintf('The game is a tie.\n');
                     break;
                 end
