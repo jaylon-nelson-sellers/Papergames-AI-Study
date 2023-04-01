@@ -45,10 +45,10 @@ classdef PerceptronLayer
                 obj.outputs = input2;
 
                 obj.weights = (1--1)*rand(obj.outputs, obj.inputs)-1;
-                obj.weights = obj.weights * (1/obj.inputs);
+               % obj.weights = obj.weights * (1/obj.inputs);
 
                 obj.biases = (1--1)*rand(1, obj.outputs)-1;
-                 obj.biases = obj.biases * (1/obj.inputs);
+              %   obj.biases = obj.biases * (1/obj.inputs);
                 %create based on weights and biases
             else
                 obj.weights = input1;
@@ -70,6 +70,8 @@ classdef PerceptronLayer
                     TFOutput = hardlim(input);
                 case "hardlims"
                     TFOutput = hardlims(input);
+                case "purelin"
+                    TFOutput = purelin(input);
             end
         end
 
@@ -92,7 +94,11 @@ classdef PerceptronLayer
          function fOutput = getOutput(obj,inputVector)
             fOutput = forward(obj, inputVector);
         end
-
+        
+        function fOutput = getPureLin(obj,inputVector)
+            fOutput = forward(obj, inputVector);
+            fOutput = round(fOutput);
+        end
 
         function fOutput = getAnswer(obj,inputVector)
             fOutput = forward(obj, inputVector);

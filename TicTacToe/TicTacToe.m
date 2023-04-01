@@ -77,7 +77,7 @@ classdef TicTacToe
             while true
 
                 fprintf('The bot is making a move...\n');
-                [row, col] = Bot.bot_move(obj.board);
+                [row, col] = Bot.bot_move(obj.board,1);
                 obj.board(row, col) = 1;
                 disp( obj.board);
                 % Check if the bot has won
@@ -94,7 +94,7 @@ classdef TicTacToe
 
                 % Get the bot's move
                 fprintf('The bot is making a move...\n');
-                [row, col] = Bot.bot_move(obj.board);
+                [row, col] = Bot.bot_move(obj.board,2);
                 obj.board(row, col) = 2;
                 disp( obj.board);
                 % Check if the bot has won
