@@ -11,20 +11,15 @@ classdef Swiss
         function obj = Swiss(playerArray, numRounds)
             obj.players = playerArray;
             obj.numRounds = numRounds;
+            obj.rankings = zeros(size(obj.players));
             obj = obj.sort();
         end
 
 
         function obj = sort(obj)
-            scores = nan(size(obj.players));
-            for ii = 1:numel(obj.players)
-                scores(ii) = obj.players(ii).Score.score;
-            end
-            [~, idx] = sort(scores, 'descend');
+            [~, idx] = sort(obj.rankings, 'descend');
             obj.players = obj.players(idx);
-            for i = 1:numel(obj.players)
-                obj.rankings(i) = obj.players(i).Score.score;
-            end
+            obj.rankings = obj.rankings(idx);
         end
 
         % Method to run the tournament
@@ -35,14 +30,15 @@ classdef Swiss
 
                 % Play each game and update rankings
                 for iGame = 1:size(pairings, 1)
-                    player1 = pairings(iGame, 1);
-                    player2 = pairings(iGame, 2);
-                    winner = obj.playGame(player1, player2);
-                    obj.updateRankings(player1, player2, winner);
+                    p1 = pairings(iGame, 1);
+                    p2 = pairings(iGame, 2);
+                    winner = obj.playGame(obj.players(p1), obj.players(p2));
+                    obj = obj.updateRankings(p1, p2, winner);
                 end
 
                 % Display current rankings
                 disp(['Rankings after round ' num2str(iRound) ':']);
+                obj = obj.sort();
                 disp(obj.rankings);
             end
 
@@ -51,55 +47,55 @@ classdef Swiss
 
         % Method to pair players for a round based on current rankings
         function pairings = pairPlayers(obj)
-            % Shuffle players to randomize pairings
-            shuffledPlayers = obj.players(randperm(length(obj.players)));
-
+            obj.sort();
+            sortPlayers = obj.players;
             % Pair players with closest rankings
-            pairings = zeros(length(shuffledPlayers)/2, 2);
+            pairings = zeros(length(sortPlayers)/2, 2);
             for iPair = 1:size(pairings, 1)
                 idx1 = (iPair-1)*2 + 1;
                 idx2 = idx1 + 1;
-                pairings(iPair, :) = [shuffledPlayers(idx1) shuffledPlayers(idx2)];
+                pairings(iPair, :) = [idx1 idx2];
             end
         end
 
         % Method to simulate a game between two players and return the winner
         function winner = playGame(obj, player1, player2)
             game = TicTacToe();
-            winnerIdx = game.playBotBotGame(player1,player2);
-            if winnerIdx == 1
-                winner = player1;
-            else
-                winner = player2;
-            end
+            winner = game.playBotBotGame(player1,player2);
         end
 
         % Method to update player rankings after a round
-        function obj = updateRankings(obj, player1, player2, winner)
-            % Find indices of players in rankings array
-            idx1 = find(strcmp(obj.players, player1));
-            idx2 = find(strcmp(obj.players, player2));
-            winIdx = find(strcmp(obj.players, winner));
+        function obj = updateRankings(obj, P1Idx, P2Idx, W)
+            P1 =  obj.players(P1Idx);
+            P2 = obj.players(P2Idx);
 
             % Update rankings based on game outcome
-            if winIdx == idx1
-                obj.rankings(idx1) = obj.rankings(idx1) + 1;
-            elseif winIdx == idx2
-                obj.rankings(idx2) = obj.rankings(idx2) + 1;
+            if W == 1
+                obj.rankings(P1Idx) = obj.rankings(P1Idx) + 1;
+                P1.rating = P1.rating.updateRating(P2.rating, 1);
+                P2.rating = P2.rating.updateRating(P1.rating, 0);
+            elseif W == 2
+                obj.rankings(P2Idx) = obj.rankings(P2Idx) + 1;
+                P2.rating = P2.rating.updateRating(P1.rating, 1);
+                P1.rating  = P1.rating.updateRating(P2.rating, 0);
             else
                 % Tie - do nothing
+                P1.rating  = P1.rating.updateRating(P2.rating, .5);
+                P2.rating  = P2.rating.updateRating(P1.rating, .5);
             end
+            obj.players(P1Idx) = P1;
+            obj.players(P2Idx) = P2;
         end
 
         function TopBots = returnBestBots(obj, percentile)
-            sz = Size(obj.players);
+            sz = length(obj.players);
             NumOfBots = round(sz * (1-percentile));
-            Range = sz- NumOfBots;
-            TopBots = repmat(TicTacToeBot(), NumOfBots, 1);
-            j = 0;
-            for i = sz:-1:Range
-                TopBots(j) = obj.players(i);
-                j = j + 1;
+            TopBots = TicTacToeBot.empty(NumOfBots, 0);
+
+            j = 1;
+            for i = 1:NumOfBots
+                TopBots(i) = obj.players(i);
+               
             end
         end
     end

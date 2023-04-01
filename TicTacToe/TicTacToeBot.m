@@ -4,7 +4,7 @@ classdef TicTacToeBot
 
     properties
         Brain
-        Score
+        rating
         Genus
         Species
     end
@@ -12,7 +12,7 @@ classdef TicTacToeBot
     methods
         function obj = TicTacToeBot()
             obj.Brain = PerceptronLayer(28, 2, "purelin");
-            obj.Score = Glicko2Score(1500, 350, 0.06, .75);
+            obj.rating = Elo(1000,10);
             [obj.Genus, obj.Species] = generate_random_name(); 
         end
 
@@ -39,11 +39,11 @@ classdef TicTacToeBot
                 row = row(idx);
                 col = col(idx);
             end
-            pause(.5);
+            %pause(.5);
         end
 
         function score = getScore(obj)
-            score = obj.Score.score;
+            score = obj.rating.score;
         end
 
         function obj = setScore(Opponent, Result)

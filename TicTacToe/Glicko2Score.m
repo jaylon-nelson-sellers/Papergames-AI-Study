@@ -29,7 +29,7 @@ classdef Glicko2Score
             priorScores = [obj.score; [opponents.score]];
             priorRDs = [obj.RD; [opponents.RD]];
             priorVolatilities = [obj.volatility; [opponents.volatility]];
-            [g2r, g2RD, g2v] = glicko2(priorScores, priorRDs, priorVolatilities, obj.c);
+            [g2r, g2RD, g2v] = Glicko2Score(priorScores, priorRDs, priorVolatilities, obj.c);
             
             % Step 2: Calculate the expected score of the current player against each opponent.
             nOpponents = length(opponents);

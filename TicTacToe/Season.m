@@ -22,7 +22,7 @@ classdef Season
             rounds = log2(length(obj.BotArray));
             ST = Swiss(obj.BotArray, rounds); 
 
-            ST.run_tournament();
+            ST.runTournament();
         end
 
     end
