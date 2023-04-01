@@ -72,16 +72,16 @@ classdef Swiss
             % Update rankings based on game outcome
             if W == 1
                 obj.rankings(P1Idx) = obj.rankings(P1Idx) + 1;
-                P1.rating = P1.rating.updateRating(P2.rating, 1);
-                P2.rating = P2.rating.updateRating(P1.rating, 0);
+                %P1.rating = P1.rating.updateRating(P2.rating, 1);
+                %P2.rating = P2.rating.updateRating(P1.rating, 0);
             elseif W == 2
                 obj.rankings(P2Idx) = obj.rankings(P2Idx) + 1;
-                P2.rating = P2.rating.updateRating(P1.rating, 1);
-                P1.rating  = P1.rating.updateRating(P2.rating, 0);
+                %P2.rating = P2.rating.updateRating(P1.rating, 1);
+                %P1.rating  = P1.rating.updateRating(P2.rating, 0);
             else
                 % Tie - do nothing
-                P1.rating  = P1.rating.updateRating(P2.rating, .5);
-                P2.rating  = P2.rating.updateRating(P1.rating, .5);
+                %P1.rating  = P1.rating.updateRating(P2.rating, .5);
+                %P2.rating  = P2.rating.updateRating(P1.rating, .5);
             end
             obj.players(P1Idx) = P1;
             obj.players(P2Idx) = P2;

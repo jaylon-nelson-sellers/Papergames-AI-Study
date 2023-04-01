@@ -1,16 +1,36 @@
-function [weights_new, biases_new] = mutate(weights, biases, mutation_rate)
+function [weights_new, biases_new] = mutate(weights, biases, MR)
 % MUTATE Randomly mutates weights and biases based on a specified mutation rate.
 
-% Determine the number of weights and biases
-num_weights = numel(weights);
-num_biases = numel(biases);
+[wRows, wCols] = size(weights);
+[bRows, bCols] = size(biases);
 
-% Generate a random matrix with the same dimensions as the weights
-mutation_matrix = randn(num_weights, 1) < mutation_rate;
+mutatedWeights = weights;
+numOfMutations = randi(wRows*wCols);
+indexes = randperm(wRows *wCols, numOfMutations);
 
-% Create the new weight and bias matrices
-weights_new = weights + mutation_matrix .* randn(num_weights, 1);
-biases_new = biases + mutation_matrix .* randn(num_biases, 1);
+for i = 1:numOfMutations
+    % Convert the linear index to a row and column index
+    [row, col] = ind2sub([wRows wCols], indexes(i));
+
+    % Add a random value to the selected index
+    mutatedWeights(row, col) = mutatedWeights(row, col) + -MR + (MR+MR).*rand();
+end
+
+mutatedBiases = biases;
+numOfMutations = randi(bRows*bCols);
+indexes = randperm(bRows *bCols, numOfMutations);
+
+for i = 1:numOfMutations
+    % Convert the linear index to a row and column index
+    [row, col] = ind2sub([bRows bCols], indexes(i));
+
+    % Add a random value to the selected index
+    mutatedBiases(row, col) = mutatedBiases(row, col) + -MR + (MR+MR).*rand();
+end
+
+weights_new = mutatedWeights;
+biases_new = mutatedBiases;
+
 
 end
 
