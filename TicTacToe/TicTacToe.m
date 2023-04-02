@@ -54,9 +54,8 @@ classdef TicTacToe
 
                 % Get the bot's move
                 fprintf('The bot is making a move...\n');
-                [row, col] = Bot.bot_move(obj.board);
+                [row, col] = Bot.bot_move(obj.board,2);
                 obj.board(row, col) = 2;
-                disp( obj.board);
                 % Check if the bot has won
                 if check_win(obj.board, 2)
                     fprintf('The bot wins!\n');
@@ -73,43 +72,44 @@ classdef TicTacToe
         end
 
         function winner = playBotBotGame(obj, Bot, Bot2)
+            
             % Loop until the game is over
             while true
 
-                fprintf('The bot is making a move...\n');
+                %fprintf('The bot is making a move...\n');
                 [row, col] = Bot.bot_move(obj.board,1);
                 obj.board(row, col) = 1;
-                disp( obj.board);
+                %disp( obj.board);
                 % Check if the bot has won
                 if check_win(obj.board, 1)
-                    fprintf('Bot 1 wins!\n');
+                   % fprintf('Bot 1 wins!\n');
                     winner = 1;
                     break;
                 end
 
                 % Check if the game is a tie
                 if check_tie(obj.board)
-                    fprintf('The game is a tie.\n');
+                 %   fprintf('The game is a tie.\n');
                     winner = 0;
                     break;
                 end
 
                 % Get the bot's move
-                fprintf('The bot is making a move...\n');
+                %fprintf('The bot is making a move...\n');
                 [row, col] = Bot.bot_move(obj.board,2);
                 obj.board(row, col) = 2;
-                disp( obj.board);
+                %disp( obj.board);
                 % Check if the bot has won
                 if check_win(obj.board, 2)
                     winner = 2;
-                    fprintf('Bot 2 wins!\n');
+                 %   fprintf('Bot 2 wins!\n');
                     break;
                 end
 
                 % Check if the game is a tie
                 if check_tie(obj.board)
                     winner = 0;
-                    fprintf('The game is a tie.\n');
+                  %  fprintf('The game is a tie.\n');
                     break;
                 end
             end

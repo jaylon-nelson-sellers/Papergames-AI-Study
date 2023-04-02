@@ -1,38 +1,30 @@
-function [weights_new, biases_new] = mutate(weights, biases, MR)
-% MUTATE Randomly mutates weights and biases based on a specified mutation rate.
+function returnParameter = mutate(parameter, p, mutationRate)
+% Function to mutate a 2D array with a given probability and mutation rate
+% Input:
+%   A: a 2D array
+%   p: probability of changing each element in A (a value between 0 and 1)
+%   mutationRate: a scalar factor to scale the magnitude of the mutation
+% Output:
+%   B: a 2D array with mutated values
 
-[wRows, wCols] = size(weights);
-[bRows, bCols] = size(biases);
+% Get the size of the input array
+[m, n] = size(parameter);
 
-mutatedWeights = weights;
-numOfMutations = randi(wRows*wCols);
-indexes = randperm(wRows *wCols, numOfMutations);
+% Make a copy of the input array
+returnParameter = parameter;
 
-for i = 1:numOfMutations
-    % Convert the linear index to a row and column index
-    [row, col] = ind2sub([wRows wCols], indexes(i));
-
-    % Add a random value to the selected index
-    mutatedWeights(row, col) = mutatedWeights(row, col) + -MR + (MR+MR).*rand();
+% Loop over each element in the array
+for i = 1:m
+    for j = 1:n
+        % Generate a random number between 0 and 1
+        rand_num = rand();
+        
+        % If the random number is less than p, change the element
+        if rand_num < p
+            % Change the element to a random value times the mutation rate
+            mutation = ((rand() - 0.5) * mutationRate);
+            returnParameter(i, j) = returnParameter(i, j) +mutation;
+        end
+    end
 end
-
-mutatedBiases = biases;
-numOfMutations = randi(bRows*bCols);
-indexes = randperm(bRows *bCols, numOfMutations);
-
-for i = 1:numOfMutations
-    % Convert the linear index to a row and column index
-    [row, col] = ind2sub([bRows bCols], indexes(i));
-
-    % Add a random value to the selected index
-    mutatedBiases(row, col) = mutatedBiases(row, col) + -MR + (MR+MR).*rand();
 end
-
-weights_new = mutatedWeights;
-biases_new = mutatedBiases;
-
-
-end
-
-
-

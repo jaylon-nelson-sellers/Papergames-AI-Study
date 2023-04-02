@@ -30,13 +30,10 @@ classdef Season
         end
 
         function obj = RunTournament(obj)
-            rounds = round(log2(length(obj.BestBots))); %magic num
-            if rounds < 10
-                rounds = 10;
-            end
+            rounds = log2(length(obj.BotArray));
             ST = Swiss(obj.BestBots, rounds);
 
-            obj.BestBots = ST.runTournament();
+            obj.BotArray = ST.runTournament();
         end
 
         function obj = breedBest(obj)
@@ -65,20 +62,14 @@ classdef Season
                     tempBots(j) = obj.BotArray(j);
                 end
                 obj.BestBots = [obj.BestBots tempBots];
-                if (mod(i,100) == 0)
+                if (mod(i,10) == 0)
                     obj = obj.RunTournament();
                     obj.dispBest(obj.BestBots);
-                  
-                    numOfBots = round(length(obj.BestBots) * .1);
-                    tempBots = TicTacToeBot.empty(numOfBots,0);
-                    for x = 1:numOfBots 
-                        tempBots(x) = obj.BestBots(x);
-                    end
-                    obj.BotArray = [obj.BotArray tempBots];
+                    k = round(size(obj.BestBots) * .1);
+                    for k = 11
                     fileName = "results/G" + i+ ".mat";
                     save(fileName, "obj");
                 end
-               
                 obj = obj.breedBest();
             end
         end
