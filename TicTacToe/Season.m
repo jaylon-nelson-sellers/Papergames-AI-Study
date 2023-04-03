@@ -59,29 +59,42 @@ classdef Season
                 obj = obj.RunSeason();
                 disp("----------------------------------------");
                 disp("Generation:" + i);
-                tempBots = obj.BotArray;
-                
+                numOfBots = 100;
+                tempBots = TicTacToeBot.empty(numOfBots,0);
+                if (numOfBots > length(obj.BotArray))
+                    numOfBots =  length(obj.BotArray);
+                end
+                for x = 1:numOfBots
+                    tempBots(x) = obj.BotArray(x);
+                end
+
                 obj.BestBots = [obj.BestBots tempBots];
                 if (mod(i,100) == 0)
                     obj = obj.RunTournament();
                     obj.dispBest(obj.BestBots);
-                  
-                    numOfBots = round(length(obj.BestBots) * .1);
+
+                    numOfBots = 100;
                     tempBots = TicTacToeBot.empty(numOfBots,0);
-                    for x = 1:numOfBots 
+                    for x = 1:numOfBots
                         tempBots(x) = obj.BestBots(x);
                     end
                     obj.BotArray = [obj.BotArray tempBots];
                     fileName = "results/G" + i+ ".mat";
                     save(fileName, "obj");
                 end
-               
+
                 obj = obj.breedBest();
             end
         end
 
         function obj = dispBest(obj, Bots)
-            for i = 1:500
+            len = length(Bots);
+            if (len < 1000)
+                
+            else
+                len = 1000;
+            end
+            for i = 1:len
                 BotProfile = Bots(i).Genus + " " + Bots(i).Species;
                 disp(i + ") " + BotProfile);
                 BotProfile = "Gen: " + Bots(i).generation + " Elo: " + round(Bots(i).rating.rating);

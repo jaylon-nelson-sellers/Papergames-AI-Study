@@ -16,7 +16,7 @@ classdef TicTacToeBot
 
     methods
         function obj = TicTacToeBot()
-            obj.Brain = PerceptronLayer(28, 2, "purelin");
+            obj.Brain = PerceptronLayer(28, 9, "softmax");
             obj.rating = Elo(1000,10);
             obj.wins =0;
             obj.loses=0;
@@ -32,8 +32,7 @@ classdef TicTacToeBot
             while failedAttempts < 3
                 inputArray = readGameState(board, tag, failedAttempts);
                 output = obj.Brain.getPureLin(inputArray);
-                row = output(1);
-                col = output(2);
+                [row col] = convertOutput(output);
                 if (~(checkValid(row) && checkValid(col)))
                     failedAttempts = failedAttempts + 1;
 

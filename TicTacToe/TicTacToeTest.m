@@ -1,5 +1,5 @@
 
-S = Season(1024, 1, 100000);
+S = Season(256, 1, 1000000);
 final = S.RunGenerations();
 
 TTT = TicTacToe();

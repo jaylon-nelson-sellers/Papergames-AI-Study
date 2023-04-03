@@ -72,6 +72,9 @@ classdef PerceptronLayer
                     TFOutput = hardlims(input);
                 case "purelin"
                     TFOutput = purelin(input);
+                case "softmax"
+                    TFOutput = softmax(input);
+                   
             end
         end
 

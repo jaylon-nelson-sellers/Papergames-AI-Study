@@ -3,8 +3,8 @@ function children = breed(parent, num_children, mutationRate)
 % children using the average of the parents' weights and biases.
 
 % Create the children's weights and biases as the average of the parents'
-children_weights = (parent.Brain.weights) / 2;
-children_biases = (parent.Brain.biases) / 2;
+children_weights = (parent.Brain.weights);
+children_biases = (parent.Brain.biases);
 
 % Create a random number of children
 for i = 1:num_children

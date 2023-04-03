@@ -83,7 +83,14 @@ classdef Swiss
                 obj = obj.sort();
                 %disp(obj.rankings);
             end
-            returnVal = obj.returnNumOfBots(10000);
+            numOfPlayers = length(obj.players);
+            if numOfPlayers < 1000
+                sz =numOfPlayers;
+            else
+                sz = 2048;
+            end
+
+            returnVal = obj.returnNumOfBots(sz);
          end
 
         % Method to pair players for a round based on current rankings
@@ -123,6 +130,8 @@ classdef Swiss
                 P2 = P2.setScore(P1.rating, 1);
                 P1 = P1.setScore(P2.rating, 0);
             else
+                obj.rankings(P1Idx) = obj.rankings(P1Idx) + .5;
+                obj.rankings(P2Idx) = obj.rankings(P2Idx) + .5;
                 % Tie - do nothing
                 P1 = P1.setScore(P2.rating, .5);
                 P2 = P2.setScore(P1.rating, .5);
