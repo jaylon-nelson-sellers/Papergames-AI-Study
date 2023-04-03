@@ -59,11 +59,8 @@ classdef Season
                 obj = obj.RunSeason();
                 disp("----------------------------------------");
                 disp("Generation:" + i);
-                %obj.dispBest(obj.BotArray);
-                tempBots = TicTacToeBot.empty(10,0);
-                for j = 1:10
-                    tempBots(j) = obj.BotArray(j);
-                end
+                tempBots = obj.BotArray;
+                
                 obj.BestBots = [obj.BestBots tempBots];
                 if (mod(i,100) == 0)
                     obj = obj.RunTournament();
@@ -84,7 +81,7 @@ classdef Season
         end
 
         function obj = dispBest(obj, Bots)
-            for i = 1:length(Bots)
+            for i = 1:500
                 BotProfile = Bots(i).Genus + " " + Bots(i).Species;
                 disp(i + ") " + BotProfile);
                 BotProfile = "Gen: " + Bots(i).generation + " Elo: " + round(Bots(i).rating.rating);

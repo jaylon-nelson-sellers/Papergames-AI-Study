@@ -8,7 +8,7 @@ function [str1, str2] = changeName(str1, str2)
 rand_num = rand();
 
 % If the random number is less than p, change the element
-if rand_num < .5
+if rand_num < .1
     num_changes =1;
 
     % Generate random indices for the characters to be changed in str2

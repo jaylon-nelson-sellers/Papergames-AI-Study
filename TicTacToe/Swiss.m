@@ -41,6 +41,9 @@ classdef Swiss
                    
                     winner = obj.playGame(obj.players(p1), obj.players(p2));
                     obj = obj.updateRankings(p1, p2, winner);
+
+                    winner = obj.playGame(obj.players(p2), obj.players(p1));
+                    obj = obj.updateRankings(p2, p1, winner);
                 end
 
                 % Display current rankings
@@ -48,7 +51,6 @@ classdef Swiss
                 obj = obj.sort();
                 %disp(obj.rankings);
             end
-
             returnVal = obj.returnBestBots(.9);
         end
 
@@ -71,6 +73,9 @@ classdef Swiss
                    
                     winner = obj.playGame(obj.players(p1), obj.players(p2));
                     obj = obj.updateRankings(p1, p2, winner);
+
+                    winner = obj.playGame(obj.players(p2), obj.players(p1));
+                    obj = obj.updateRankings(p2, p1, winner);
                 end
 
                 % Display current rankings
@@ -78,9 +83,8 @@ classdef Swiss
                 obj = obj.sort();
                 %disp(obj.rankings);
             end
-            returnVal = obj.returnBestBots(0);
-        end
-
+            returnVal = obj.returnNumOfBots(10000);
+         end
 
         % Method to pair players for a round based on current rankings
         function pairings = pairPlayers(obj)
@@ -97,8 +101,9 @@ classdef Swiss
             end
         end
 
+
         % Method to simulate a game between two players and return the winner
-        function winner = playGame(obj, player1, player2)
+        function winner = playGame(~,player1, player2)
             game = TicTacToe();
             winner = game.playBotBotGame(player1,player2);
         end
@@ -136,6 +141,14 @@ classdef Swiss
             for i = 1:NumOfBots
                 TopBots(i) = obj.players(i);
                
+            end
+        end
+
+        function TopBots = returnNumOfBots(obj, num)
+            TopBots = TicTacToeBot.empty(num, 0);
+
+            for i = 1:num
+                TopBots(i) = obj.players(i);               
             end
         end
     end
