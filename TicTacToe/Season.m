@@ -69,7 +69,7 @@ classdef Season
                 end
 
                 obj.BestBots = [obj.BestBots tempBots];
-                if (mod(i,100) == 0)
+                if (mod(i,1000) == 0)
                     obj = obj.RunTournament();
                     obj.dispBest(obj.BestBots);
 
