@@ -1,3 +1,4 @@
+import numpy as np
 # apply transfer function
 def _apply_transfer_function(self, x):
     if self.transfer_function == 'hard_limit':

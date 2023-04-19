@@ -1,5 +1,6 @@
 import random
 import Board
+from Bot import Bot
 
 class Game:
     """
@@ -65,7 +66,7 @@ class Game:
                 if player == 0:
                     position = input(f"Player {player + 1} (Human), enter your move: ")
                 else:
-                    position = self.generate_computer_move()
+                    position = Bot.make_move(self.board)
                     print(f"Player {player + 1} (Computer) made a move: {position}")
                 self.move(player, position)
         print("Game Over")
@@ -78,7 +79,11 @@ class Game:
         self.start()
         while not self.end():
             for player in range(self.players):
-                position = self.generate_computer_move()
-                print(f"Player {player + 1} (Computer) made a move: {position}")
+                if player == 0:
+                    position = Bot.make_move(self.board)
+                    print(f"Player {player + 1} (Computer) made a move: {position}")
+                else:
+                    position = Bot.make_move(self.board)
+                    print(f"Player {player + 1} (Computer) made a move: {position}")
                 self.move(player, position)
         print("Game Over")

@@ -2,10 +2,10 @@ import numpy as np
 
 class DNA:
     #Constructor method
-    def __init__(self):
-        self.type = None
-        self.architecture = None
-        self.transfer_function = None
+    def __init__(self, type, arch, TF):
+        self.type = type
+        self.architecture = arch
+        self.transfer_function = TF
 
     def forward(self, inputs):
         """
@@ -17,8 +17,7 @@ class DNA:
         Returns:
             outputs (array): An array of outputs.
         """
-        outputs = self.architecture.forward(inputs)
-        return self._apply_transfer_function(outputs)
+        return self.architecture.forward(inputs)
 
     def rounded_output(self, outputs):
         """

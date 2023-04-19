@@ -1,14 +1,8 @@
-from Taxonomy import Taxonomy
-from Rating import Rating
-from Stats import Stats
-class Bot:
+from Bot import Bot
 
-    #constructor
+class TicTacToeBot(Bot):
     def __init__(self):
-        self.DNA = None
-        self.rating = Rating()
-        self.stats = Stats()
-        self.taxonomy = Taxonomy()
+        super().__init__()
 
     def convert_board_to_input(self, board):
         """
@@ -20,7 +14,17 @@ class Bot:
         Returns:
             input_data: A representation of the board in the desired input format.
         """
-        raise NotImplementedError("This method should be implemented in the derived class.")
+        # Flatten the board and convert it to a one-hot encoded representation
+        input_data = []
+        for row in board:
+            for cell in row:
+                if cell == 'X':
+                    input_data.extend([1, 0, 0])
+                elif cell == 'O':
+                    input_data.extend([0, 1, 0])
+                else:
+                    input_data.extend([0, 0, 1])
+        return input_data
 
     def make_move(self, board):
         """
@@ -32,7 +36,15 @@ class Bot:
         Returns:
             move: A move object representing the bot's chosen move.
         """
-        raise NotImplementedError("This method should be implemented in the derived class.")
+        input_data = self.convert_board_to_input(board.board)
+        outputs = self.DNA.forward(input_data)
+        move_index = self.DNA.output_to_move(outputs)
+
+        # Convert the move index to row and column coordinates
+        row = move_index // 3
+        col = move_index % 3
+
+        return row, col
 
     def random_move(self, board):
         """
@@ -44,7 +56,8 @@ class Bot:
         Returns:
             move: A move object representing a randomly chosen move.
         """
-        raise NotImplementedError("This method should be implemented in the derived class.")
+        available_moves = [(i, j) for i in range(3) for j in range(3) if board[i][j] == ' ']
+        return random.choice(available_moves)
 
     def update(self, result):
         """
@@ -53,7 +66,8 @@ class Bot:
         Args:
             result: A game result object representing the outcome of the game.
         """
-        raise NotImplementedError("This method should be implemented in the derived class.")
+        self.stats.update(result)
+        self.rating.update(result)
 
     def __str__(self):
         """
@@ -62,4 +76,4 @@ class Bot:
         Returns:
             str: A string representation of the bot.
         """
-        raise NotImplementedError("This method should be implemented in the derived class.")
+        return f"Taxonomy: {self.taxonomy}\nRating: {self.rating}\nStats: {self.stats}"
