@@ -1,6 +1,8 @@
 from TicTacToeBot import TicTacToeBot
 from DNA import DNA
 from SingleLayerPerceptron import SingleLayerPerceptron
+
+
 class TTT100(TicTacToeBot):
 
     def __init__(self):

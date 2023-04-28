@@ -2,6 +2,7 @@ import numpy as np
 import apply_transfer_function as atf
 import mutate_child as mc
 
+
 class SingleLayerPerceptron:
     def __init__(self, transfer_function, num_inputs, num_outputs):
         self.transfer_function = transfer_function
@@ -52,6 +53,6 @@ class SingleLayerPerceptron:
                 child_architecture.biases[i] = other_architecture.biases[i]
 
         # Mutate child architecture
-        child_architecture = mc.mutate_child(child_architecture, 0.5)
+        child_architecture = mc.apply_progressive_mutations(child_architecture, 0.5)
 
         return child_architecture

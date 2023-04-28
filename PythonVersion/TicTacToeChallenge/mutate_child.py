@@ -18,8 +18,8 @@ def apply_progressive_mutations(child, initial_mutation_rate):
     mutation_rate = initial_mutation_rate
 
     for _ in range(5):
-        mutated_child = mutate_module.mutate(child, mutation_probability, mutation_rate)
+        child = mutate_module.mutate_weights(child, mutation_probability, mutation_rate)
         mutation_probability /= 2
         mutation_rate *= 2
 
-    return mutated_child
+    return child

@@ -1,6 +1,3 @@
-import random
-from Board import Board
-from Bot import Bot
 
 class Game:
     """

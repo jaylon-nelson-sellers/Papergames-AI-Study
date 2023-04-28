@@ -1,6 +1,6 @@
 import random
 import string
-from MutateName import MutateName
+from mutate_name import mutate_name
 
 class Taxonomy:
     def __init__(self):
@@ -46,7 +46,7 @@ class Taxonomy:
 
         # Mutate the taxonomy variables using the mutateName function with decreasing mutation rates
         mutation_rate = 1
-        MN = MutateName()
+        MN = mutate_name
         self.Domain = MN(self.Domain, mutation_rate)
         mutation_rate *= 0.5
         self.Kingdom = MN(self.Kingdom, mutation_rate)

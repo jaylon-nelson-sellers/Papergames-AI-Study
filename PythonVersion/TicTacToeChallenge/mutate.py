@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def mutate_weights(weights, mutation_probability, mutation_rate):
     """
     Mutate a 2D array (weights) with a given probability and mutation rate.

@@ -1,12 +1,13 @@
 from Taxonomy import Taxonomy
-from Rating import Rating
+from Glicko2Rating import Glicko2Rating
 from Stats import Stats
-class Bot:
 
-    #constructor
-    def __init__(self, DNA):
-        self.DNA = DNA
-        self.rating = Rating()
+
+class Bot:
+    # constructor
+    def __init__(self, dna):
+        self.DNA = dna
+        self.rating = Glicko2Rating()
         self.stats = Stats()
         self.taxonomy = Taxonomy()
 

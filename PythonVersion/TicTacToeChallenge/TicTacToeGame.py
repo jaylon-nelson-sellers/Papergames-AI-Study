@@ -2,6 +2,7 @@ import random
 from Game import Game
 from TicTacToeBoard import TicTacToeBoard
 
+
 class TicTacToeGame(Game):
     def __init__(self):
         super().__init__("Tic Tac Toe", 2)
