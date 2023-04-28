@@ -1,5 +1,6 @@
 import numpy as np
 import apply_transfer_function as atf
+import mutate_child as mc
 
 class SingleLayerPerceptron:
     def __init__(self, transfer_function, num_inputs, num_outputs):
@@ -49,5 +50,7 @@ class SingleLayerPerceptron:
                 child_architecture.biases[i] = self.biases[i]
             else:
                 child_architecture.biases[i] = other_architecture.biases[i]
-
+        child_architecture = mc.mutate_child(child_architecture, .5)
         return child_architecture
+
+
