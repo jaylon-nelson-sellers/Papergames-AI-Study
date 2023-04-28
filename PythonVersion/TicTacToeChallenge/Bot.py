@@ -4,8 +4,8 @@ from Stats import Stats
 class Bot:
 
     #constructor
-    def __init__(self):
-        self.DNA = None
+    def __init__(self, DNA):
+        self.DNA = DNA
         self.rating = Rating()
         self.stats = Stats()
         self.taxonomy = Taxonomy()

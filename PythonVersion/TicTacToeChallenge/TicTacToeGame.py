@@ -1,3 +1,5 @@
+import random
+
 from Game import Game
 from TicTacToeBoard import TicTacToeBoard
 class TicTacToeGame(Game):
@@ -36,14 +38,15 @@ class TicTacToeGame(Game):
             position: A string in the format "row,col" representing the position of the move.
         """
         player_symbol = "X" if player == 0 else "O"
-        row, col = map(int, position.split(","))
+        row, col = position
         if self.board.is_valid_move(player_symbol, (row, col)):
             self.board.make_move(player_symbol, (row, col))
             print(self.board)
+            return True
         else:
-            print("Invalid move. Please try again.")
+            return False
 
-    def generate_computer_move(self):
+    def generate_random_move(self):
         """
         Generate a random valid move for the computer player.
 
@@ -53,4 +56,4 @@ class TicTacToeGame(Game):
         row, col = random.randint(0, 2), random.randint(0, 2)
         while not self.board.is_valid_move("O", (row, col)):
             row, col = random.randint(0, 2), random.randint(0, 2)
-        return f"{row},{col}"
+        return row, col

@@ -2,10 +2,9 @@ import numpy as np
 
 class DNA:
     #Constructor method
-    def __init__(self, type, arch, TF):
+    def __init__(self, type, arch):
         self.type = type
         self.architecture = arch
-        self.transfer_function = TF
 
     def forward(self, inputs):
         """

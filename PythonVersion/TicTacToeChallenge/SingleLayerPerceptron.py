@@ -1,5 +1,5 @@
 import numpy as np
-import ApplyTransferFunction as TF
+import apply_transfer_function as atf
 
 class SingleLayerPerceptron:
     def __init__(self, transfer_function, num_inputs, num_outputs):
@@ -20,7 +20,7 @@ class SingleLayerPerceptron:
             outputs (array): An array of outputs.
         """
         outputs = np.dot(inputs, self.weights) + self.biases
-        outputs = TF(outputs, self.transfer_function)
+        outputs = atf.apply_transfer_function(outputs, self.transfer_function)
         return outputs
 
     def crossover(self, other_architecture):

@@ -1,8 +1,8 @@
 from Bot import Bot
 
 class TicTacToeBot(Bot):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, DNA):
+        super().__init__(DNA)
 
     def convert_board_to_input(self, board):
         """

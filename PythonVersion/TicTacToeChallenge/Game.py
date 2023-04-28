@@ -42,6 +42,10 @@ class Game:
         """
         raise NotImplementedError("This method should be implemented in the derived class.")
 
+    def generate_random_move(self):
+
+        raise NotImplementedError("This method should be implemented in the derived class.")
+
     def human_vs_human(self):
         """
         Play a game in Human vs Human mode, where both players provide input for their moves.
@@ -63,12 +67,21 @@ class Game:
         self.start()
         while not self.end():
             for player in range(self.players):
-                if player == 0:
-                    position = input(f"Player {player + 1} (Human), enter your move: ")
-                else:
-                    position = Bot.make_move(self.board)
-                    print(f"Player {player + 1} (Computer) made a move: {position}")
-                self.move(player, position)
+                invalid_moves = 0
+                while (invalid_moves  < 3):
+                    if player == 0:
+                        position = input(f"Player {player + 1} (Human), enter your move: ")
+                        position = eval(position)
+                    else:
+                        position = Bot.make_move(self.board)
+                        print(f"Player {player + 1} (Computer) made a move: {position}")
+                    if (self.move(player, position)):
+                        break
+                    else:
+                        invalid_moves += 1
+                    if (invalid_moves == 3):
+                        position = self.generate_random_move()
+                        self.move(player,position)
         print("Game Over")
 
     def computer_vs_computer(self, Bot1, Bot2):
