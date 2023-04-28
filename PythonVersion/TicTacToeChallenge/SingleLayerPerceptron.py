@@ -24,9 +24,9 @@ class SingleLayerPerceptron:
         outputs = atf.apply_transfer_function(outputs, self.transfer_function)
         return outputs
 
-    def crossover(self, other_architecture):
+    def crossover_and_mutate(self, other_architecture):
         """
-        Perform crossover with another single-layer perceptron architecture to produce a child architecture.
+        Perform crossover with another single-layer perceptron architecture and mutate the child architecture.
 
         Args:
             other_architecture (SingleLayerPerceptron): Another single-layer perceptron architecture.
@@ -34,7 +34,7 @@ class SingleLayerPerceptron:
         Returns:
             child_architecture (SingleLayerPerceptron): A child single-layer perceptron architecture.
         """
-        child_architecture = SingleLayerPerceptron(self.num_inputs, self.num_outputs)
+        child_architecture = SingleLayerPerceptron(self.transfer_function, self.num_inputs, self.num_outputs)
 
         # Crossover weights
         for i in range(self.num_inputs):
@@ -50,7 +50,8 @@ class SingleLayerPerceptron:
                 child_architecture.biases[i] = self.biases[i]
             else:
                 child_architecture.biases[i] = other_architecture.biases[i]
-        child_architecture = mc.mutate_child(child_architecture, .5)
+
+        # Mutate child architecture
+        child_architecture = mc.mutate_child(child_architecture, 0.5)
+
         return child_architecture
-
-

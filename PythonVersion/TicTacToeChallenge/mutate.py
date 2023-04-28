@@ -1,35 +1,34 @@
 import numpy as np
 
-
-def mutate(parameter, p, mutation_rate):
+def mutate_weights(weights, mutation_probability, mutation_rate):
     """
-    Function to mutate a 2D array with a given probability and mutation rate.
+    Mutate a 2D array (weights) with a given probability and mutation rate.
 
     Args:
-        parameter (numpy.array): A 2D array.
-        p (float): Probability of changing each element in parameter (a value between 0 and 1).
+        weights (numpy.array): A 2D array representing the weights to be mutated.
+        mutation_probability (float): Probability of changing each element in weights (between 0 and 1).
         mutation_rate (float): A scalar factor to scale the magnitude of the mutation.
 
     Returns:
-        numpy.array: A 2D array with mutated values.
+        numpy.array: A 2D array with mutated weights.
     """
 
-    # Get the size of the input array
-    m, n = parameter.shape
+    # Get the dimensions of the input weights array
+    num_rows, num_columns = weights.shape
 
-    # Make a copy of the input array
-    return_parameter = parameter.copy()
+    # Make a copy of the input weights array
+    mutated_weights = weights.copy()
 
-    # Loop over each element in the array
-    for i in range(m):
-        for j in range(n):
+    # Iterate over each element in the weights array
+    for row in range(num_rows):
+        for column in range(num_columns):
             # Generate a random number between 0 and 1
-            rand_num = np.random.rand()
+            random_number = np.random.rand()
 
-            # If the random number is less than p, change the element
-            if rand_num < p:
-                # Change the element to a random value times the mutation rate
+            # If the random number is less than the mutation_probability, mutate the weight
+            if random_number < mutation_probability:
+                # Calculate the mutation and update the weight
                 mutation = (np.random.rand() - 0.5) * mutation_rate
-                return_parameter[i, j] += mutation
+                mutated_weights[row, column] += mutation
 
-    return return_parameter
+    return mutated_weights
